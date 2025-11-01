@@ -72,7 +72,7 @@ const nextCocktail = computed(() => getCocktailAt(1));
 
     <h2 id="menu-heading" class="sr-only">Cocktail menu</h2>
 
-    <nav class="cocktail-tabs" aria-label="Cocktail Navigation">
+    <div class="bg-transparent cocktail-tabs" aria-label="Cocktail Navigation">
       <button
         v-for="(cocktail, index) in sliderLists"
         :key="cocktail.name"
@@ -85,7 +85,7 @@ const nextCocktail = computed(() => getCocktailAt(1));
       >
         {{ cocktail.name }}
       </button>
-    </nav>
+    </div>
     <div class="content">
       <div class="arrows">
         <button class="text-left" @click="goToSlide(currentIndex - 1)">

@@ -1,6 +1,6 @@
 <script setup>
 import { openingHours, socials } from "../../constants";
-import { onMounted, ref, watch } from "vue";
+import { onMounted } from "vue";
 import gsap from "gsap";
 import { ScrollTrigger, SplitText } from "gsap/all";
 
