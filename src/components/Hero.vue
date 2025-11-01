@@ -1,23 +1,34 @@
 <script setup>
+import { ref, onMounted, computed } from "vue";
 import gsap from "gsap";
 import { SplitText } from "gsap/all";
-import { onMounted } from "vue";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useMediaQuery } from "@vueuse/core";
 
-gsap.registerPlugin(SplitText);
+gsap.registerPlugin(ScrollTrigger, SplitText);
+
+const videoRef = ref(null);
+
+// Media query per mobile
+const isMobile = useMediaQuery("(max-width: 767px)");
 
 onMounted(() => {
-  const heroSplit = new SplitText(".title", { type: "chars, words" });
-  const paragraphSplit = new SplitText(".subtitle", { type: "lines" });
-
-  heroSplit.chars.forEach((char) => {
-    char.classList.add("text-gradient");
+  const heroSplit = new SplitText(".title", {
+    type: "chars, words",
   });
 
+  const paragraphSplit = new SplitText(".subtitle", {
+    type: "lines",
+  });
+
+  // Applica la classe text-gradient ai caratteri
+  heroSplit.chars.forEach((char) => char.classList.add("text-gradient"));
+
   gsap.from(heroSplit.chars, {
-    duration: 1.8,
     yPercent: 100,
+    duration: 1.8,
     ease: "expo.out",
-    stagger: 0.06,
+    stagger: 0.03,
   });
 
   gsap.from(paragraphSplit.lines, {
@@ -26,7 +37,7 @@ onMounted(() => {
     duration: 1.8,
     ease: "expo.out",
     stagger: 0.06,
-    delay: 0.5,
+    delay: 1,
   });
 
   gsap
@@ -39,7 +50,27 @@ onMounted(() => {
       },
     })
     .to(".right-leaf", { y: 200 }, 0)
-    .to(".left-leaf", { y: -200 }, 0);
+    .to(".left-leaf", { y: -200 }, 0)
+    .to(".arrow", { y: 100 }, 0);
+
+  const startValue = isMobile.value ? "top 50%" : "center 60%";
+  const endValue = isMobile.value ? "120% top" : "bottom top";
+
+  let tl = gsap.timeline({
+    scrollTrigger: {
+      trigger: "video",
+      start: startValue,
+      end: endValue,
+      scrub: true,
+      pin: true,
+    },
+  });
+
+  videoRef.value.onloadedmetadata = () => {
+    tl.to(videoRef.value, {
+      currentTime: videoRef.value.duration,
+    });
+  };
 });
 </script>
 
@@ -74,6 +105,16 @@ onMounted(() => {
       </div>
     </div>
   </section>
+
+  <div class="video absolute inset-0">
+    <video
+      ref="videoRef"
+      src="/videos/output.mp4"
+      muted
+      playsinline
+      preload="auto"
+    ></video>
+  </div>
 </template>
 
 <style scoped></style>
