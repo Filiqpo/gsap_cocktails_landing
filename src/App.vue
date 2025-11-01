@@ -7,6 +7,7 @@ import Cocktails from "./components/Cocktails.vue";
 import About from "./components/About.vue";
 import Art from "./components/Art.vue";
 import Menu from "./components/Menu.vue";
+import Footer from "./components/Footer.vue";
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 </script>
@@ -19,6 +20,7 @@ gsap.registerPlugin(ScrollTrigger, SplitText);
     <About />
     <Art />
     <Menu />
+    <Footer />
   </main>
 </template>
 
