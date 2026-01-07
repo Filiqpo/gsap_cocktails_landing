@@ -43,7 +43,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div id="art">
+  <div id="work">
     <div class="container mx-auto h-full pt-20">
       <h2 class="will-fade">the ART</h2>
       <div class="content">
